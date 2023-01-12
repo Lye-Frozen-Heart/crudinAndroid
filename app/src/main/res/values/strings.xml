@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">crudinAndroid</string>
+    <string name="lblfamily">Familia</string>
+    <string name="family">Altres</string>
+
+    <string name="lblcodi">Codi</string>
+    <string name="codi">null</string>
+
+    <string name="lblpreu">Preu</string>
+    <string name="preu">null</string>
+
+    <string name="lbldescrip">Descripció</string>
+    <string name="descrip">null</string>
+
+    <string name="lblpriva">Preu (IVA)</string>
+    <string name="priva">null</string>
+
+    <string name="lblstock">Stock</string>
+    <string name="stock">null</string>
+
+    <string name="icodi">Enter a code</string>
+    <string name="ecodi">Example: 122GZ nor whatever</string>
+
+    <string name="ifamily">Select a family</string>
+    <string name="famhint">Families</string>
+
+
+    <string name="iprice">Enter a price</string>
+    <string name="eprice">In number statements...</string>
+
+    <string name="istock">Enter a stock</string>
+    <string name="estock">In number statements...</string>
+
+    <string name="idescr">Enter a description</string>
+    <string name="esdescr">Enter a wholesome description...</string>
+
+    <string name="save">Add Article</string>
+    <string name="update">Update Article</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="delete">Delete</string>
+    <string name="delete_by">Delete Article</string>
+    <string name="obg">*</string>
+    <string name="edtarticle">Edit Article</string>
+    <string name="fieldnotfull">Some fields you\'ve left need to be filled</string>
+    <string name="artexists">Article already exists</string>
+    <string name="askdelete">Are you sure you want to delete this article?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="articlist">Article List</string>
+    <string name="no_description">No description</string>
+    <string name="no_stock">No stock</string>
+    <string name="search">Search by description</string>
+
+    <string name="artcreated">Article created</string>
+    <string name="artnotcreated">Article not created</string>
+    <string name="arteliminated">Article eliminated</string>
+    <string name="artupdated">Article eliminated</string>
+
+
+
+</resources>
