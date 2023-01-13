@@ -24,6 +24,9 @@ interface ArticleDao {
     @Query("SELECT * FROM articles WHERE stock <= 0")
     fun getNegativeStockArticles():MutableList<Article>
 
+    @Query("SELECT * FROM articles WHERE descri like '%' || :descri || '%'")
+    fun getDescriptionFilteredArticles(descri: String?):MutableList<Article>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(article: Article):Long
 

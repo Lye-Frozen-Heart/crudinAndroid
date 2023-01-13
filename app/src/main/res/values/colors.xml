@@ -14,4 +14,9 @@
     <color name="g_the_v">#215023</color>
     <color name="m_the">#774905</color>
     <color name="m_the_v">#633D05</color>
+
+    <color name="f_software">#69197A</color>
+    <color name="f_hardware">#AC1053</color>
+    <color name="f_others">#A51A1A</color>
+    <color name="f_undefined">#1D7EC8</color>
 </resources>

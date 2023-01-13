@@ -1,7 +1,6 @@
 package com.lyescorp.crudinandroid
 
-import android.content.DialogInterface
-import android.content.Intent
+
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,7 +8,6 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.lyescorp.crudinandroid.room.Article
 import com.lyescorp.crudinandroid.room.Family
@@ -21,8 +19,8 @@ import java.util.*
 import kotlin.reflect.KClass
 
 class UpdateActivity : AppCompatActivity() {
-    lateinit var code:EditText;
-    lateinit var famSp:Spinner // findViewById<Spinner?>(R.id.s_fam)
+    lateinit var code:EditText
+    lateinit var famSp:Spinner
     lateinit var price:EditText
     lateinit var stock:EditText
     lateinit var descr:EditText
@@ -100,6 +98,7 @@ class UpdateActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     //Btn delete
     fun btnCancel(article: Article?) {
         var alertDialogBuilder = AlertDialog.Builder(this);
@@ -112,66 +111,46 @@ class UpdateActivity : AppCompatActivity() {
          showArticles()
          finish() // Do something when user clicks OK
         }
-        alertDialogBuilder.setNegativeButton(R.string.no) { dialog, which ->
-           dialog.cancel()
-        }
+        alertDialogBuilder.setNegativeButton(R.string.no) { dialog, which -> dialog.cancel() }
+
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
-
-
-        // cerramos indicando que se cierra con cancel, no hace falta crear el bundle de retorno
-
     }
+
     //Btn Update
     fun btnUpdate(view:View){
-        val intent:Intent = Intent(this,MainActivity::class.java)
-        var article: Article = Article("N/A","N/A",Family.ALTRES,0F,0F);
+        var article = Article("N/A","N/A",Family.ALTRES,0F,0F);
 
+        if(code.text.isEmpty()) Snackbar.make(view,R.string.code_not_f, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
+        else article.codi = code.text.toString()
 
-        if( code.text.isEmpty()){
-            Snackbar.make(view,R.string.fieldnotfull, Snackbar.LENGTH_SHORT).setBackgroundTint(
-                Color.RED)
-                .show()
-        }else{
-            article.codi = code.text.toString()
-        }
-        when( famSp?.selectedItem){
+        when(famSp?.selectedItem){
             "SOFTWARE" -> article?.family = Family.SOFTWARE;
             "HARDWARE" -> article?.family = Family.HARDWARE;
             "ALTRES" -> article?.family = Family.ALTRES;
             "UNDEFINED" -> article?.family = Family.UNDEFINED;
         }
-        if( price.text.isEmpty()){
-            Snackbar.make(view,R.string.fieldnotfull, Snackbar.LENGTH_SHORT).setBackgroundTint(
-                Color.RED)
-                .show()
-        }else{
-            article?.price = price?.text.toString().toFloat()
-        }
-        if( stock.text.isEmpty()){
-            Snackbar.make(view,R.string.fieldnotfull, Snackbar.LENGTH_SHORT).setBackgroundTint(
-                Color.RED)
-                .show()
-        }else{
-            article?.stock = stock?.text.toString().toFloat()
-        }
-        if( descr.text.isEmpty()){
-            Snackbar.make(view,R.string.fieldnotfull, Snackbar.LENGTH_SHORT).setBackgroundTint(
-                Color.RED)
-                .show()
-        }else{
-            article?.descri = descr?.text.toString()
-        }
 
-        if( article.codi != "N/A" && article.descri != "N/A" && (article.price >= 0F && article.stock >= 0F)){
+        if(price.text.isEmpty()) Snackbar.make(view,R.string.price_not_f, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
+        else article?.price = price?.text.toString().toFloat()
+
+        if(stock.text.isEmpty()) Snackbar.make(view,R.string.stock_not_f, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
+        else article?.stock = stock?.text.toString().toFloat()
+
+        if(descr.text.isEmpty()) Snackbar.make(view,R.string.descri_not_f, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
+        else article?.descri = descr?.text.toString()
+
+        if(article.codi != "N/A" && article.descri != "N/A" && (article.price >= 0F && article.stock >= 0F)){
             GlobalScope.launch (Dispatchers.IO ) {
                 articleDao.updateWhereCode(article.codi,article.descri,article.family,article.price,article.stock)
             }
             finish()
         }else{
-            Snackbar.make(view,R.string.fieldnotfull, Snackbar.LENGTH_SHORT).setBackgroundTint(
-                Color.RED)
-                .show()
+            if( code.text.isEmpty()) Snackbar.make(view,R.string.code_not_f, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
+            else if( price.text.isEmpty()) Snackbar.make(view,R.string.price_not_f, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
+            else if( stock.text.isEmpty())Snackbar.make(view,R.string.fieldnotfull, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
+            else if( descr.text.isEmpty()) Snackbar.make(view,R.string.fieldnotfull, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
+            else Snackbar.make(view,R.string.fieldnotfull, Snackbar.LENGTH_SHORT).setBackgroundTint(Color.RED).show()
         }
 
     }

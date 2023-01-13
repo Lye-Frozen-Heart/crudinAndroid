@@ -11,6 +11,7 @@ import android.view.*
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lyescorp.crudinandroid.*
 import com.lyescorp.crudinandroid.room.ArticleDao
@@ -32,6 +33,7 @@ class cArticleAdapter: RecyclerView.Adapter<cArticleAdapter.ViewHolder>() {
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = articulos.get(position)
+
         holder.bind(item, context)
     }
 
@@ -59,6 +61,7 @@ class cArticleAdapter: RecyclerView.Adapter<cArticleAdapter.ViewHolder>() {
             var fam = view.findViewById<TextView>(R.id.txtvwFamily)
             var card = view.findViewById<CardView>(R.id.cardRecycler);
             var imvdelete = view.findViewById<ImageView>(R.id.imv_Delete);
+            var imvfam = view.findViewById<ImageView>(R.id.img_Family)
 
         fun bind(articulo: Article, context: Context) {
                 codi.text = articulo.codi
@@ -74,6 +77,7 @@ class cArticleAdapter: RecyclerView.Adapter<cArticleAdapter.ViewHolder>() {
                     Family.HARDWARE -> fam.text = "HARDWARE"
                     else -> fam.text = "N/A"
                 }
+                applyColorByFamilyAndStock(articulo,context,fam,stock,imvfam)
                 card.setOnClickListener{
                     intentEdit.putExtra("articleupdate",articulo);
                     startActivity(context,intentEdit,null)
@@ -99,17 +103,46 @@ class cArticleAdapter: RecyclerView.Adapter<cArticleAdapter.ViewHolder>() {
                     }
                     val alertDialog = alertDialogBuilder.create()
                     alertDialog.show()
-
-
-
-
                 }
-
-
-
         }
-        fun roundToTwoDecimalsString(number: Double): String {
-            return "%.2f".format(number)
+        fun roundToTwoDecimalsString(number: Double): String {return "%.2f".format(number)}
+
+        fun applyColorByFamilyAndStock(articulo: Article,context: Context, txtvwFamily:TextView,txtvwStock:TextView,iconImageView:ImageView){
+            var cardftxtvw = txtvwFamily
+            var cardstxtvw = txtvwStock
+            var cardfimgvw = iconImageView
+            var color = 1 ;
+            if(articulo.family == Family.SOFTWARE){
+                 color = ContextCompat.getColor(context,R.color.f_software)
+                 cardftxtvw.setTextColor(color)
+                 cardfimgvw.setImageResource(R.drawable.ic_baseline_data_object_24)
+                 cardfimgvw.setColorFilter(color)
+            }else if(articulo.family == Family.HARDWARE){
+                color = ContextCompat.getColor(context,R.color.f_hardware)
+                cardftxtvw.setTextColor(color)
+                cardfimgvw.setImageResource(R.drawable.ic_baseline_computer_24)
+                cardfimgvw.setColorFilter(color)
+            }else if(articulo.family == Family.ALTRES){
+                color = ContextCompat.getColor(context,R.color.f_others)
+                cardftxtvw.setTextColor(color)
+                cardfimgvw.setImageResource(R.drawable.ic_baseline_devices_other_24)
+                cardfimgvw.setColorFilter(color)
+
+            }else{
+                color = ContextCompat.getColor(context,R.color.f_undefined)
+                cardftxtvw.setTextColor(color)
+                cardfimgvw.setImageResource(R.drawable.ic_baseline_devices_other_24)
+                cardfimgvw.setColorFilter(color)
+            }
+
+            if( articulo.stock > 0){
+                color = ContextCompat.getColor(context,R.color.green)
+                cardstxtvw.setTextColor(color)
+            }else{
+                color = ContextCompat.getColor(context,R.color.delete)
+                cardstxtvw.setTextColor(color)
+            }
+
         }
 
 
